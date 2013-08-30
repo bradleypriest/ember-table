@@ -9,7 +9,8 @@ Ember.LazyContainerView = Ember.ContainerView.extend Ember.StyleBindingsMixin,
 
   init: ->
     @_super()
-    @onNumChildViewsDidChange()
+    Ember.run.next this, ->
+      @onNumChildViewsDidChange()
 
   height: Ember.computed ->
     @get('content.length') * @get('rowHeight')
