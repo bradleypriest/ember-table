@@ -95,17 +95,17 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   contentDidChange: ->
     @notifyPropertyChange 'cellContent'
 
-  contentPathWillChange: (->
+  contentPathWillChange: Ember.beforeObserver('column.contentPath', ->
     contentPath = @get 'column.contentPath'
     if contentPath
       @removeObserver("row.#{contentPath}", this, this.contentDidChange)
-  ).observesBefore 'column.contentPath'
+  )
 
-  contentPathDidChange: (->
+  contentPathDidChange: Ember.beforeObserver('column.contentPath', ->
     contentPath = this.get 'column.contentPath'
     if contentPath
       @addObserver("row.#{contentPath}", this, this.contentDidChange)
-  ).observesBefore 'column.contentPath'
+  )
 
   cellContent: Ember.computed (key, value) ->
     row     = @get 'row'
